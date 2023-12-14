@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Processor</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <img src="/static/images/logo.svg" alt="Logo" id="company-logo">
+        <h1>Credit Analysis Copilot(Beta)</h1>
+    </header>
+
+    <div class="upload-container">
+        <label for="fileInput" class="custom-file-upload">Select PDF File</label>
+        <input type="file" id="fileInput" accept="application/pdf" style="display: none;" onchange="showFileName()">
+        
+        <span id="file-name" class="file-name"></span> <!-- File name will be shown here -->
+        <button onclick="uploadAndProcess()">Upload and Process</button>
+    </div>
+
+    <div id="loading-circle" class="loader" style="display: none;"></div> <!-- Loading circle container -->
+
+    <div id="output"></div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
+
+
