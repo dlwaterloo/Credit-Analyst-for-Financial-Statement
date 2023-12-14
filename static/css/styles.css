@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
+#output {
+    margin-top: 20px;
+}
+
+.data-row {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.label {
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+    min-width: 200px;
+}
+
+.value {
+    display: inline-block;
+    min-width: 100px;
+}
+
+#company-logo {
+    height: 50px;
+    margin-right: 20px;
+}
+
+.loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Style for the file input and upload buttons */
+button, input[type="file"] {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover, input[type="file"]:hover {
+    background-color: #3498db; /* Change as needed */
+    color: white;
+}
+
+input[type="file"] {
+    background-color: #f0f0f0; /* Light grey background */
+    color: black;
+}
+
+button {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+}
+
+/* Additional existing styles... */
+
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+

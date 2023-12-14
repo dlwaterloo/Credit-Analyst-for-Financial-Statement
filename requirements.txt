@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+azure-ai-formrecognizer
+thefuzz
+python-Levenshtein
+langchain
+openai
+python-dotenv
+pandas
+python-multipart
