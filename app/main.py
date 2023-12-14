@@ -9,7 +9,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    with open("templates/index.html", "r") as f:
+    with open("static/index.html", "r") as f:
         return f.read()
 
 @app.post("/upload-pdf/")
