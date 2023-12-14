@@ -1,3 +1,5 @@
+const backendUrl = "__BACKEND_URL__";
+
 async function uploadAndProcess() {
     const outputDiv = document.getElementById('output');
     const loadingDiv = document.getElementById('loading-circle');
