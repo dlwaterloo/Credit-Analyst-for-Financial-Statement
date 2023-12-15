@@ -313,7 +313,7 @@ def process_income_statement(key, data):
         Gross_profit = check_label_and_value(table, ['Gross profit'], key)
         output["Gross Profit"] = Gross_profit if Gross_profit is not None else ""
 
-        net_money = check_label_and_value(table, ['Net profit', 'Net income', 'Net loss', 'Loss'], key)
+        net_money = check_label_and_value(table, ['Net profit', 'Net income', 'Net loss'], key)
         output["Net Profit (or Loss)"] = net_money if net_money is not None else ""        
         
         cost_labels = ['Total costs and expenses', 'Total operating expenses']
