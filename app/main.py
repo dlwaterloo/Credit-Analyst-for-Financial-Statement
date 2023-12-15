@@ -9,7 +9,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:8000",
-    "https://pdf-bot-eight.vercel.app/",
+    "https://pdf-bot-eight.vercel.app",
 ]
 
 app.add_middleware(
