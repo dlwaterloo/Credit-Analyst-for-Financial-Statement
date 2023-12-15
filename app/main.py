@@ -2,8 +2,23 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from .pdf_processor import process_pdf
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+
+origins = [
+    "http://localhost:8000",
+    "https://pdf-bot-eight.vercel.app/",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
