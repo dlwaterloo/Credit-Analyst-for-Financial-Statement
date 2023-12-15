@@ -241,6 +241,9 @@ def extract_monetary_unit_with_langchain(key):
 
 def process_balance_sheet(key, data):
     output = {}
+
+    output["Doc Type"] = "Balance Sheet"
+
     company_name = extract_company_name_with_langchain(key)
     output["Company name"] = company_name if company_name else ""
     
@@ -252,33 +255,34 @@ def process_balance_sheet(key, data):
     table = df.pivot(index='row_index', columns='column_index', values='content').fillna('')
 
     try:
+        total_assets = check_label_and_value(table, ['Total assets'], key)
+        output["Total Assets"] = total_assets if total_assets is not None else ""
+
+        total_liabilities = check_label_and_value(table, ['Total liabilities'], key)
+        output["Total Liabilities"] = total_liabilities if total_liabilities is not None else ""
+
+        shareholders_equity = check_label_and_value(table, ['Total stockholders\' equity', 'Total equity', 'Total stockholders’ equity (deficit)', 'Total stockholders’ deficit'], key)
+        output["Total Stockholders' Equity"] = shareholders_equity if shareholders_equity is not None else ""
+    
         total_current_assets = check_label_and_value(table, ['Total current assets'], key)
-        output["Total current assets"] = total_current_assets if total_current_assets is not None else ""
+        output["Total Current Assets"] = total_current_assets if total_current_assets is not None else ""
         
         total_current_liabilities = check_label_and_value(table, ['Total current liabilities'], key)
-        output["Total current liabilities"] = total_current_liabilities if total_current_liabilities is not None else ""
+        output["Total Current Liabilities"] = total_current_liabilities if total_current_liabilities is not None else ""
         
         # Calculate ratios and add to output
         current_ratio = calculate_ratio(total_current_assets, total_current_liabilities)
         output["Current Ratio"] = current_ratio if current_ratio is not None else ""
         
-        total_liabilities = check_label_and_value(table, ['Total liabilities'], key)
-        output["Total liabilities"] = total_liabilities if total_liabilities is not None else ""
-        
-        shareholders_equity = check_label_and_value(table, ['Total stockholders\' equity', 'Total equity', 'Total stockholders’ equity (deficit)', 'Total stockholders’ deficit'], key)
-        output["Total stockholders' equity"] = shareholders_equity if shareholders_equity is not None else ""
-        
         debt_to_equity_ratio = calculate_ratio(total_liabilities, shareholders_equity)
         output["Debt-to-Equity Ratio"] = debt_to_equity_ratio if debt_to_equity_ratio is not None else ""
         
         cash_and_cash_equivalents = check_label_and_value(table, ['Cash and cash equivalents'], key)
-        output["Cash and cash equivalents"] = cash_and_cash_equivalents if cash_and_cash_equivalents is not None else ""
+        output["Cash and Cash Equivalents"] = cash_and_cash_equivalents if cash_and_cash_equivalents is not None else ""
         
         cash_ratio = calculate_ratio(cash_and_cash_equivalents, total_current_liabilities)
         output["Cash Ratio"] = cash_ratio if cash_ratio is not None else ""
         
-        total_assets = check_label_and_value(table, ['Total assets'], key)
-        output["Total Assets"] = total_assets if total_assets is not None else ""
 
     except Exception as e:
         output["Error"] = str(e)
@@ -288,6 +292,9 @@ def process_balance_sheet(key, data):
 
 def process_income_statement(key, data):
     output = {}
+
+    output["Doc Type"] = "Income Statement"
+
     company_name = extract_company_name_with_langchain(key)
     output["Company name"] = company_name if company_name else ""
     
@@ -299,9 +306,15 @@ def process_income_statement(key, data):
     table = df.pivot(index='row_index', columns='column_index', values='content').fillna('')
 
     try:
-        revenue_labels = ['Revenue', 'Total Revenue', 'Total revenue', "Loss"]
+        revenue_labels = ['Revenue', 'Total Revenue', 'Total revenue']
         Revenue = check_label_and_value(table, revenue_labels, key)
-        output["Revenue(or Loss)"] = Revenue if Revenue is not None else ""
+        output["Total Revenue"] = Revenue if Revenue is not None else ""
+
+        Gross_profit = check_label_and_value(table, ['Gross profit'], key)
+        output["Gross Profit"] = Gross_profit if Gross_profit is not None else ""
+
+        net_money = check_label_and_value(table, ['Net profit', 'Net income', 'Net loss', 'Loss'], key)
+        output["Net Profit (or Loss)"] = net_money if net_money is not None else ""        
         
         cost_labels = ['Total costs and expenses', 'Total operating expenses']
         Total_costs = check_label_and_value(table, cost_labels, key)
@@ -315,10 +328,6 @@ def process_income_statement(key, data):
         
         interest_coverage_ratio = calculate_ratio(EBIT, abs(interest_expense)) if interest_expense is not None and interest_expense != 0 else None
         output["Interest Coverage Ratio"] = interest_coverage_ratio if interest_coverage_ratio is not None else ""
-        
-        net_income_labels = ['Net income', 'Net loss']
-        net_money = check_label_and_value(table, net_income_labels, key)
-        output["net money (income or loss)"] = net_money if net_money is not None else ""
 
     except Exception as e:
         output["Error"] = str(e)
